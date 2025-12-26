@@ -86,3 +86,66 @@ button:hover {
     border-radius: 10px;
 } 
 
+
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 260px;
+  }
+
+  button span {
+    font-size: 18px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    height: 100dvh;
+    width: 260px;
+    z-index: 2000;
+    transition: left 0.3s ease;
+  }
+
+  /* When sidebar is open */
+  .sidebar.open {
+    left: 0;
+  }
+
+  /* Hide text, show icons only (optional) */
+  button span {
+    font-size: 16px;
+  }
+
+  .history li {
+    font-size: 13px;
+  }
+
+  .sign {
+    font-size: 13px;
+  }
+}
+
+/* Extra Small Devices */
+@media (max-width: 480px) {
+  .sidebar {
+    width: 230px;
+  }
+}
+@media (max-width: 768px) {
+  .closeBtn {
+    display: block !important;
+    align-self: flex-end;
+    margin: 10px;
+    background: transparent;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: #fff;
+  }
+}

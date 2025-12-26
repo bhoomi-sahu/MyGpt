@@ -41,3 +41,60 @@ pre {
   flex-direction: column;
   gap: 20px;
 }
+
+/* =========================
+   RESPONSIVE CHAT MESSAGES
+========================= */
+
+/* Desktop improvement */
+.chats {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .chats {
+    padding: 1.5rem;
+  }
+
+  .userMessage {
+    margin-left: auto;
+    max-width: 80%;
+    padding: 10px 16px;
+    font-size: 0.85rem;
+  }
+
+  .userDiv,
+  .gptDiv {
+    font-size: 0.85rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+
+  .chats {
+    padding: 1rem;
+    gap: 14px;
+  }
+
+  .userMessage {
+    margin-left: auto;
+    max-width: 90%;
+    padding: 8px 14px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+  }
+
+  .gptDiv {
+    max-width: 100%;
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+
+  pre {
+    font-size: 0.75rem;
+    overflow-x: auto;
+  }
+}

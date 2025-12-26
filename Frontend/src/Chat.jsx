@@ -13,18 +13,16 @@ function Chat() {
 
     const [isListening, setIsListening] = useState(false);
 
-    // 🎤 Speech recognition instance
+   
     const recognitionRef = useRef(null);
 
-    /* ----------------------------------------------------
-       🎤 INITIALIZE SPEECH-TO-TEXT ENGINE
-    ------------------------------------------------------- */
+    
     useEffect(() => {
         const SpeechRecognition =
             window.SpeechRecognition || window.webkitSpeechRecognition;
 
         if (!SpeechRecognition) {
-            console.warn("❌ Speech Recognition NOT supported!");
+            console.warn("Speech Recognition NOT supported!");
             recognitionRef.current = null;
             return;
         }
@@ -34,7 +32,7 @@ function Chat() {
         recog.interimResults = true;
         recog.lang = "en-US";
 
-        // 🔥 Speech result (final + interim)
+       
         recog.onresult = async (event) => {
             let transcript = "";
             for (let i = event.resultIndex; i < event.results.length; i++) {
@@ -43,7 +41,7 @@ function Chat() {
 
             console.log("🎤 User said:", transcript.trim());
 
-            // sendMessage ONLY when Chrome sends final transcript
+       
             if (event.results[event.results.length - 1].isFinal) {
                 setIsListening(false);
                 await sendMessage(transcript.trim());
@@ -63,9 +61,7 @@ function Chat() {
         recognitionRef.current = recog;
     }, []);
 
-    /* ----------------------------------------------------
-       🎤 START / STOP LISTENING
-    ------------------------------------------------------- */
+   
     const startListening = () => {
         const recog = recognitionRef.current;
 
@@ -74,7 +70,7 @@ function Chat() {
             return;
         }
 
-        // 🚫 Stop AI speaking before mic starts
+       
         window.speechSynthesis.cancel();
 
         try {
@@ -94,7 +90,7 @@ function Chat() {
     };
 
     /* ----------------------------------------------------
-       📢 AI REPLY TYPEWRITER EFFECT 
+        AI REPLY TYPEWRITER EFFECT 
     ------------------------------------------------------- */
     useEffect(() => {
         if (reply === null) {
@@ -118,7 +114,7 @@ function Chat() {
     }, [prevChats, reply]);
 
     /* ----------------------------------------------------
-       🔊 TEXT-TO-SPEECH
+        TEXT-TO-SPEECH
     ------------------------------------------------------- */
     const speakText = (text) => {
         if (!text) return;
@@ -148,7 +144,7 @@ function Chat() {
 )}
 
 
-            {/* 🎤 Mic Button */}
+            {/* Mic Button */}
             <div className="micContainer" style={{ textAlign: "center", marginBottom: "10px" }}>
                 {!isListening ? (
                     <button className="micBtn" onClick={startListening}>

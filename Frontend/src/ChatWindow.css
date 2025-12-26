@@ -10,7 +10,7 @@
     text-align: center;
 }
 
-/* navbar */
+
 .navbar {
     width: 100%;
     display: flex;
@@ -39,7 +39,7 @@
     cursor: pointer;
 }
 
-/* Chat input container */
+
 .chatInput {
     width: 100%;
     display: flex;
@@ -57,7 +57,6 @@
     align-items: center;
 }
 
-/* Input Field */
 input {
     width: 100%;
     border: none;
@@ -179,4 +178,105 @@ input:focus {
   height: 100vh;
   background: #212121;
   overflow: hidden;
+}
+
+
+
+
+@media (max-width: 768px) {
+
+  .navbar span {
+    font-size: 1rem;
+    margin: 0.8rem 1.2rem;
+  }
+
+  .userIconDiv {
+    margin: 0.8rem 1.2rem;
+  }
+
+  .inputBox {
+    max-width: 90%;
+  }
+
+  input {
+    padding: 16px;
+    font-size: 0.85rem;
+  }
+
+  #submit,
+  #mic {
+    height: 32px;
+    width: 32px;
+    font-size: 18px;
+  }
+
+  #mic {
+    right: 55px;
+  }
+
+  .dropDown {
+    right: 1.5rem;
+    top: 3.5rem;
+    width: 140px;
+  }
+}
+
+/* Mobile*/
+@media (max-width: 480px) {
+
+  .chatWindow {
+    height: 100dvh; 
+  }
+
+  .navbar span {
+    font-size: 0.9rem;
+    margin: 0.6rem 1rem;
+  }
+
+  .userIcon {
+    height: 22px;
+    width: 22px;
+    font-size: 0.8rem;
+  }
+
+  .inputBox {
+    max-width: 95%;
+  }
+
+  input {
+    padding: 14px;
+    font-size: 0.8rem;
+    border-radius: 12px;
+  }
+
+  #submit,
+  #mic {
+    height: 30px;
+    width: 30px;
+    font-size: 17px;
+  }
+
+  #mic {
+    right: 50px;
+  }
+
+  .speakReplyBtn {
+    font-size: 0.75rem;
+    padding: 6px 12px;
+  }
+
+  .info {
+    font-size: 0.7rem;
+    text-align: center;
+  }
+
+  .dropDown {
+    right: 1rem;
+    top: 3.2rem;
+    width: 130px;
+  }
+
+  .dropDownItem {
+    font-size: 0.85rem;
+  }
 }
