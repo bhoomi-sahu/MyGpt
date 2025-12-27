@@ -1,4 +1,3 @@
-
 import express from "express";
 import "dotenv/config";
 import cors from "cors";
@@ -10,10 +9,9 @@ const PORT = process.env.PORT || 5001;
 
 app.use(express.json());
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: true,
   credentials: true
 }));
-
 
 app.get("/test", (req, res) => {
   res.json({ status: "Backend running ✅" });
@@ -22,22 +20,22 @@ app.get("/test", (req, res) => {
 /* ---------------- API ROUTES ---------------- */
 app.use("/api", chatRoutes);
 
-
 const startServer = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI, {
-      serverSelectionTimeoutMS: 11000,
-      connectTimeoutMS: 11000
-    });
+    if (!process.env.MONGODB_URI) {
+      throw new Error("MONGODB_URI is missing");
+    }
 
+    await mongoose.connect(process.env.MONGODB_URI);
     console.log("✅ MongoDB Connected");
 
     app.listen(PORT, () => {
-      console.log(`Server running on http://localhost:${PORT}`);
+      console.log(` Server running on port ${PORT}`);
     });
 
   } catch (err) {
     console.error("Server failed:", err.message);
+    process.exit(1);
   }
 };
 
