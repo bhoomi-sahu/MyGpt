@@ -13,13 +13,16 @@ function ChatWindow() {
     currThreadId,
     setPrevChats,
     setNewChat,
-    setShowSidebar // ✅ mobile sidebar toggle
+    setShowSidebar
   } = useContext(MyContext);
 
   const [loading, setLoading] = useState(false);
   const [listening, setListening] = useState(false);
 
   const recognitionRef = useRef(null);
+
+  // ✅ BACKEND API URL (Render / Local)
+  const API = import.meta.env.VITE_API_URL;
 
   /* ================= SPEECH RECOGNITION ================= */
   useEffect(() => {
@@ -60,7 +63,7 @@ function ChatWindow() {
     ]);
 
     try {
-      const response = await fetch("http://localhost:5001/api/chat", {
+      const response = await fetch(`${API}/api/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -80,6 +83,7 @@ function ChatWindow() {
 
     } catch (err) {
       console.error("Chat error:", err);
+      alert("Backend not responding");
     }
 
     setPrompt("");
@@ -101,7 +105,6 @@ function ChatWindow() {
     <div className="chatWindow">
       {/* ================= NAVBAR ================= */}
       <div className="navbar">
-        {/* ☰ MOBILE SIDEBAR BUTTON */}
         <i
           className="fa-solid fa-bars mobileMenu"
           onClick={() => setShowSidebar(true)}
@@ -163,4 +166,5 @@ function ChatWindow() {
 }
 
 export default ChatWindow;
+
 
