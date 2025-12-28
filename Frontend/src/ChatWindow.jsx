@@ -21,7 +21,7 @@ function ChatWindow() {
 
   const recognitionRef = useRef(null);
 
-  // ✅ BACKEND API URL (Render / Local)
+  // ✅ BACKEND API URL (from .env)
   const API = import.meta.env.VITE_API_URL;
 
   /* ================= SPEECH RECOGNITION ================= */
@@ -56,7 +56,6 @@ function ChatWindow() {
     setLoading(true);
     setNewChat(false);
 
-    // show user message instantly
     setPrevChats(prev => [
       ...prev,
       { role: "user", content: prompt }
@@ -103,15 +102,12 @@ function ChatWindow() {
 
   return (
     <div className="chatWindow">
-      {/* ================= NAVBAR ================= */}
       <div className="navbar">
         <i
           className="fa-solid fa-bars mobileMenu"
           onClick={() => setShowSidebar(true)}
         ></i>
-
         <span>GPT</span>
-
         <div className="userIconDiv">
           <span className="userIcon">
             <i className="fa-solid fa-user"></i>
@@ -119,13 +115,10 @@ function ChatWindow() {
         </div>
       </div>
 
-      {/* ================= CHAT ================= */}
       <Chat />
 
-      {/* ================= LOADER ================= */}
       <ScaleLoader color="#fff" loading={loading} />
 
-      {/* ================= INPUT ================= */}
       <div className="chatInput">
         <div className="inputBox">
           <input
@@ -135,7 +128,6 @@ function ChatWindow() {
             onKeyDown={e => e.key === "Enter" && getReply()}
           />
 
-          {/* 🎤 MIC */}
           <div id="mic" onClick={startListening}>
             <i
               className={`fa-solid fa-microphone ${
@@ -144,13 +136,11 @@ function ChatWindow() {
             ></i>
           </div>
 
-          {/* 📩 SEND */}
           <div id="submit" onClick={getReply}>
             <i className="fa-solid fa-paper-plane"></i>
           </div>
         </div>
 
-        {/* 🔊 SPEAK */}
         {reply && (
           <div className="speakReplyBtn" onClick={speakReply}>
             🔊 Speak Reply
@@ -166,5 +156,3 @@ function ChatWindow() {
 }
 
 export default ChatWindow;
-
-

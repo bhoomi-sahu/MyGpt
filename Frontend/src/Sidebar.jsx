@@ -17,17 +17,16 @@ function Sidebar() {
     setShowSidebar
   } = useContext(MyContext);
 
-  // 🔹 Fetch all threads
+  const API = import.meta.env.VITE_API_URL;
+
+  // Fetch all threads
   const getAllThreads = async () => {
     try {
-      const res = await fetch("http://localhost:5001/api/thread");
+      const res = await fetch(`${API}/api/thread`);
       const data = await res.json();
 
       setAllThreads(
-        data.map(t => ({
-          threadId: t.threadId,
-          title: t.title
-        }))
+        data.map(t => ({ threadId: t.threadId, title: t.title }))
       );
     } catch (err) {
       console.log(err);
@@ -38,28 +37,26 @@ function Sidebar() {
     getAllThreads();
   }, [currThreadId]);
 
-  // 🔹 New chat
   const createNewChat = () => {
     setNewChat(true);
     setPrompt("");
     setReply(null);
     setCurrThreadId(uuidv1());
     setPrevChats([]);
-    setShowSidebar(false); // ✅ close sidebar on mobile
+    setShowSidebar(false);
   };
 
-  // 🔹 Switch thread
   const changeThread = async (id) => {
     setCurrThreadId(id);
 
     try {
-      const res = await fetch(`http://localhost:5001/api/thread/${id}`);
+      const res = await fetch(`${API}/api/thread/${id}`);
       const data = await res.json();
 
       setPrevChats(data.messages || []);
       setNewChat(false);
       setReply(null);
-      setShowSidebar(false); // ✅ close sidebar
+      setShowSidebar(false);
     } catch (err) {
       console.log(err);
     }
@@ -67,8 +64,6 @@ function Sidebar() {
 
   return (
     <section className={`sidebar ${showSidebar ? "open" : ""}`}>
-      
-      {/* ❌ Close button (mobile only) */}
       <button
         className="closeBtn"
         onClick={() => setShowSidebar(false)}
@@ -77,26 +72,18 @@ function Sidebar() {
         ✖
       </button>
 
-      {/* ➕ New Chat */}
       <button onClick={createNewChat}>
-        <img
-          src="src/assets/blacklogo.png"
-          alt="gpt logo"
-          className="logo"
-        />
+        <img src="src/assets/blacklogo.png" alt="gpt logo" className="logo" />
         <span>
           <i className="fa-solid fa-pen-to-square"></i>
         </span>
       </button>
 
-      {/* 🕘 History */}
       <ul className="history">
         {allThreads.map((thread, idx) => (
           <li
             key={idx}
-            className={
-              thread.threadId === currThreadId ? "highlighted" : ""
-            }
+            className={thread.threadId === currThreadId ? "highlighted" : ""}
             onClick={() => changeThread(thread.threadId)}
           >
             {thread.title}
