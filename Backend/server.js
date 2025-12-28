@@ -10,19 +10,34 @@ const PORT = process.env.PORT || 5001;
 /* ================= MIDDLEWARE ================= */
 app.use(express.json());
 
+// CORS: allow both local dev and deployed frontend
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "https://mygpt-frontend.onrender.com" // your deployed frontend
+];
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173", // local frontend
-      "https://mygpt-frontend.onrender.com" // Render frontend
-    ],
+    origin: function (origin, callback) {
+      // allow requests with no origin (like Postman)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}`;
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
     credentials: true
   })
 );
 
+// Handle preflight OPTIONS requests
+app.options("*", cors({ origin: allowedOrigins, credentials: true }));
+
 /* ================= ROUTES ================= */
 
-// Root route (Render check)
+// Root route (check deployment)
 app.get("/", (req, res) => {
   res.send("🚀 MyGPT Backend is Live");
 });
